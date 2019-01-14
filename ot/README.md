@@ -1,3 +1,8 @@
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js? 
+config=TeX-MML-AM_CHTML"
+</script>
+
 # Oblivious Transfer
 
 An oblivious transfer is a protocol where Alice transfers a secret bit m to to Bob "obviously". That is, 
