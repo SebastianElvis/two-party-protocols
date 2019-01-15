@@ -4,6 +4,7 @@
 An oblivious transfer is a protocol where Alice transfers a secret bit m to to Bob "obviously". That is, 
 
 - Bob knows whether he gets the bit, but Alice doesn’t know whether it was transferred or not.
+- Bob has a selection bit and can select which bit Alice should tranfer, but Alice has no idea which one is transfered.
 
 ## Protocols
 

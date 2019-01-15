@@ -2,9 +2,12 @@ package ot
 
 import (
 	"crypto/rand"
+	mathrand "math/rand"
+
 	"math/big"
 
 	mycrypt "github.com/SebastianElvis/two-party-protocols/common/crypto"
+	"github.com/SebastianElvis/two-party-protocols/common/mod"
 )
 
 // Alice generates 2 big random primes p, q
@@ -41,16 +44,29 @@ func RandGen(N *big.Int) (*big.Int, *big.Int, error) {
 	return a, w, nil
 }
 
-// TODO
 // Alice computs the possible square root of w: {x, -x, y, -y}, chooses one randomly, cand sends it to Bob
-func ChooseRandSqrtW(w *big.Int) *big.Int {
-
+func ChooseRandSqrtW(w, N *big.Int) (*big.Int, error) {
+	x, y, err := mod.ModSqrtMultiple(w, N)
+	if err != nil {
+		return nil, err
+	}
+	arr := []*big.Int{x, big.NewInt(-x.Int64()), y, big.NewInt(-y.Int64())}
+	rand := mathrand.Intn(3)
+	return arr[rand], nil
 }
 
 // TODO
 // Bob receives possibleSqrt, checks if possibleSqrt == a or -a
 // If yes, he can factor N to p, q and decrypt
 // Else, he cannot
-func TryDecrypt(possibleSqrt *big.Int, N *big.Int, cipher []byte) ([]byte, bool) {
-
+func TryDecrypt(possibleSqrt *big.Int, a *big.Int, N *big.Int, cipher []byte) ([]byte, bool) {
+	if new(big.Int).Sub(possibleSqrt, a).Int64() == 0 || new(big.Int).Add(possibleSqrt, a).Int64() == 0 {
+		// cannot factor
+		// wtf!!!!!!!!!!
+		return []byte{}, false
+	} else {
+		// can factor
+		// wtf!!!!!!!!!!
+		return []byte{}, true
+	}
 }
